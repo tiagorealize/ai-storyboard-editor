@@ -1,11 +1,14 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Video, FolderOpen, Palette, Sparkles } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 interface HeaderProps {
   onOpenGlobalOptions?: () => void;
   onGenerateVideo?: () => void;
 }
+
 const Header = ({
   onOpenGlobalOptions,
   onGenerateVideo
@@ -13,16 +16,19 @@ const Header = ({
   const navigate = useNavigate();
   const location = useLocation();
   const activeTab = location.pathname === '/projects' ? 'projects' : 'editor';
+
   const menuItems = [{
     id: 'projects',
     label: 'Meus Projetos',
     icon: FolderOpen,
     path: '/projects'
   }];
+
   const handleNavigation = (path: string) => {
     navigate(path);
   };
-  return <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-50 backdrop-blur-sm">
+
+  return <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
         <div className="flex items-center space-x-3">
@@ -59,4 +65,5 @@ const Header = ({
       </div>
     </header>;
 };
+
 export default Header;
