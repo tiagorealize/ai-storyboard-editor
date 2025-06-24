@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Edit3, Trash2, Plus, Clock, Image, Volume2, Type, Sparkles, Eye, Loader2 } from 'lucide-react';
+import { Edit3, Trash2, Plus, Clock, Image, Sparkles, Eye, Loader2 } from 'lucide-react';
 
 interface Scene {
   id: number;
@@ -170,26 +169,6 @@ const Timeline = ({
                   <p className="text-xs text-gray-600 mb-3 line-clamp-2">
                     {scene.text}
                   </p>
-
-                  {/* Media Indicators */}
-                  <div className="flex items-center space-x-2">
-                    {scene.hasImage && (
-                      <Badge variant="outline" className="text-xs">
-                        <Image className="w-3 h-3 mr-1" />
-                        Imagem
-                      </Badge>
-                    )}
-                    {scene.hasAudio && (
-                      <Badge variant="outline" className="text-xs">
-                        <Volume2 className="w-3 h-3 mr-1" />
-                        Áudio
-                      </Badge>
-                    )}
-                    <Badge variant="outline" className="text-xs">
-                      <Type className="w-3 h-3 mr-1" />
-                      Texto
-                    </Badge>
-                  </div>
                 </CardContent>
               </Card>
             ))}
