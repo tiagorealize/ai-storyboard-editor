@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
 import SceneEditor from '@/components/SceneEditor';
+import InlineSceneEditor from '@/components/InlineSceneEditor';
 import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
 import { Button } from '@/components/ui/button';
 import { Video, Sparkles } from 'lucide-react';
@@ -74,6 +75,7 @@ const Index = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const [editingScene, setEditingScene] = useState<any>(null);
   const [isSceneEditorOpen, setIsSceneEditorOpen] = useState(false);
+  const [isInlineEditorOpen, setIsInlineEditorOpen] = useState(false);
   const [isGlobalOptionsOpen, setIsGlobalOptionsOpen] = useState(false);
 
   // Carrega cenas do estado de navegação se disponível
@@ -85,7 +87,7 @@ const Index = () => {
   }, [location.state]);
   const handleSceneEdit = (scene: any) => {
     setEditingScene(scene);
-    setIsSceneEditorOpen(true);
+    setIsInlineEditorOpen(true);
   };
   const handleSceneSave = (updatedScene: any) => {
     setScenes(scenes.map(scene => scene.id === updatedScene.id ? updatedScene : scene));
@@ -127,7 +129,14 @@ const Index = () => {
           {/* Left Sidebar - Timeline/Scenes */}
           <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
             <div className="min-h-screen p-4 bg-white border-r border-gray-200">
-              <Timeline scenes={scenes} currentScene={currentScene} onSceneSelect={setCurrentScene} onSceneEdit={handleSceneEdit} onSceneDelete={handleSceneDelete} onAddScene={handleAddScene} />
+              <Timeline 
+                scenes={scenes} 
+                currentScene={currentScene} 
+                onSceneSelect={setCurrentScene} 
+                onSceneEdit={handleSceneEdit} 
+                onSceneDelete={handleSceneDelete} 
+                onAddScene={handleAddScene} 
+              />
             </div>
           </ResizablePanel>
 
@@ -138,7 +147,24 @@ const Index = () => {
             <div className="min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar">
               <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
                 {/* Video Player */}
-                <VideoPlayer currentScene={currentScene} totalScenes={scenes.length} onSceneChange={setCurrentScene} className="px-0" />
+                <VideoPlayer 
+                  currentScene={currentScene} 
+                  totalScenes={scenes.length} 
+                  onSceneChange={setCurrentScene} 
+                  className="px-0" 
+                />
+                
+                {/* Inline Scene Editor */}
+                {isInlineEditorOpen && (
+                  <InlineSceneEditor
+                    scene={editingScene}
+                    onSave={handleSceneSave}
+                    onClose={() => {
+                      setIsInlineEditorOpen(false);
+                      setEditingScene(null);
+                    }}
+                  />
+                )}
               </div>
             </div>
           </ResizablePanel>
@@ -146,13 +172,10 @@ const Index = () => {
       </main>
 
       {/* Global Options Drawer */}
-      <GlobalOptionsDrawer isOpen={isGlobalOptionsOpen} onClose={() => setIsGlobalOptionsOpen(false)} />
-
-      {/* Scene Editor Modal */}
-      <SceneEditor scene={editingScene} isOpen={isSceneEditorOpen} onClose={() => {
-      setIsSceneEditorOpen(false);
-      setEditingScene(null);
-    }} onSave={handleSceneSave} />
+      <GlobalOptionsDrawer 
+        isOpen={isGlobalOptionsOpen} 
+        onClose={() => setIsGlobalOptionsOpen(false)} 
+      />
     </div>;
 };
 export default Index;
