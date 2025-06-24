@@ -3,20 +3,27 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Video, Settings, LogOut, FolderOpen, Compass, User, Palette } from 'lucide-react';
+import { Video, LogOut, FolderOpen, User, Palette } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface HeaderProps {
   onOpenGlobalOptions?: () => void;
 }
 
 const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
-  const [activeTab, setActiveTab] = useState('editor');
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const activeTab = location.pathname === '/' ? 'editor' : 'projects';
 
   const menuItems = [
-    { id: 'projects', label: 'Meus Projetos', icon: FolderOpen },
-    { id: 'explore', label: 'Explorar Modelos', icon: Compass },
-    { id: 'editor', label: 'Editor', icon: Video },
+    { id: 'projects', label: 'Meus Projetos', icon: FolderOpen, path: '/projects' },
+    { id: 'editor', label: 'Editor', icon: Video, path: '/' },
   ];
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-50 backdrop-blur-sm">
@@ -43,7 +50,7 @@ const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
                   ? 'bg-video-primary text-white' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => handleNavigation(item.path)}
             >
               <item.icon className="w-4 h-4" />
               <span>{item.label}</span>
@@ -64,11 +71,6 @@ const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
               <span className="hidden sm:inline">Opções Globais</span>
             </Button>
           )}
-
-          <Button variant="outline" size="sm" className="hidden sm:flex">
-            <Settings className="w-4 h-4 mr-2" />
-            Configurações
-          </Button>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -82,10 +84,6 @@ const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 bg-white border border-gray-200" align="end">
-              <DropdownMenuItem className="flex items-center space-x-2 cursor-pointer">
-                <Settings className="w-4 h-4" />
-                <span>Configurações</span>
-              </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center space-x-2 cursor-pointer text-red-600">
                 <LogOut className="w-4 h-4" />
                 <span>Sair</span>
