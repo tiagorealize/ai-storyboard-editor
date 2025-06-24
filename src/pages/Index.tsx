@@ -7,6 +7,7 @@ import SceneEditor from '@/components/SceneEditor';
 import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
 import { Button } from '@/components/ui/button';
 import { Video, Sparkles } from 'lucide-react';
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 
 // Mock data for scenes
 const defaultScenes = [
@@ -133,39 +134,52 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} />
       
-      {/* Main Content - Fixed Width */}
-      <main className="flex-1 flex justify-center p-6 overflow-y-auto custom-scrollbar">
-        <div className="w-full max-w-[1000px] space-y-6">
-          {/* Video Player */}
-          <VideoPlayer
-            currentScene={currentScene}
-            totalScenes={scenes.length}
-            onSceneChange={setCurrentScene}
-          />
+      {/* Main Content with Resizable Panels */}
+      <main className="flex-1 overflow-hidden">
+        <ResizablePanelGroup direction="horizontal" className="h-full">
+          {/* Left Sidebar - Timeline/Scenes */}
+          <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
+            <div className="h-full p-4 overflow-y-auto custom-scrollbar bg-white border-r border-gray-200">
+              <Timeline
+                scenes={scenes}
+                currentScene={currentScene}
+                onSceneSelect={setCurrentScene}
+                onSceneEdit={handleSceneEdit}
+                onSceneDelete={handleSceneDelete}
+                onAddScene={handleAddScene}
+              />
+            </div>
+          </ResizablePanel>
 
-          {/* Timeline */}
-          <Timeline
-            scenes={scenes}
-            currentScene={currentScene}
-            onSceneSelect={setCurrentScene}
-            onSceneEdit={handleSceneEdit}
-            onSceneDelete={handleSceneDelete}
-            onAddScene={handleAddScene}
-          />
+          <ResizableHandle withHandle />
 
-          {/* Generate Video Button */}
-          <div className="flex justify-center pt-8 pb-6">
-            <Button
-              onClick={handleGenerateVideo}
-              size="lg"
-              className="bg-video-gradient hover:opacity-90 text-white px-12 py-4 h-auto text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            >
-              <Sparkles className="w-6 h-6 mr-3" />
-              Gerar Vídeo Final
-              <Video className="w-6 h-6 ml-3" />
-            </Button>
-          </div>
-        </div>
+          {/* Right Panel - Video Player and Controls */}
+          <ResizablePanel defaultSize={75}>
+            <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
+              <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
+                {/* Video Player */}
+                <VideoPlayer
+                  currentScene={currentScene}
+                  totalScenes={scenes.length}
+                  onSceneChange={setCurrentScene}
+                />
+
+                {/* Generate Video Button */}
+                <div className="flex justify-center pt-8">
+                  <Button
+                    onClick={handleGenerateVideo}
+                    size="lg"
+                    className="bg-video-gradient hover:opacity-90 text-white px-12 py-4 h-auto text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Sparkles className="w-6 h-6 mr-3" />
+                    Gerar Vídeo Final
+                    <Video className="w-6 h-6 ml-3" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </main>
 
       {/* Global Options Drawer */}
