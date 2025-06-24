@@ -5,7 +5,8 @@ import NewProjectModal from '@/components/NewProjectModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Video, Calendar, Clock, MoreVertical, Plus, Play } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Video, Calendar, Clock, MoreVertical, Plus, Play, Loader2 } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +30,10 @@ const mockProjects = [
     duration: '3:42',
     scenes: 8,
     createdAt: '2024-06-19',
-    status: 'draft'
+    status: 'rendering',
+    renderProgress: 65,
+    renderingStep: 'Gerando áudio das cenas...',
+    estimatedTime: '2 min'
   },
   {
     id: 3,
@@ -69,6 +73,11 @@ const Projects = () => {
     switch (status) {
       case 'completed':
         return <Badge variant="default" className="bg-green-100 text-green-800">Finalizado</Badge>;
+      case 'rendering':
+        return <Badge variant="secondary" className="bg-orange-100 text-orange-800">
+          <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+          Renderizando
+        </Badge>;
       case 'draft':
         return <Badge variant="secondary">Rascunho</Badge>;
       default:
@@ -104,7 +113,14 @@ const Projects = () => {
               <div className="relative">
                 {/* Thumbnail */}
                 <div className="aspect-video bg-gray-200 rounded-t-lg flex items-center justify-center">
-                  <Video className="w-12 h-12 text-gray-400" />
+                  {project.status === 'rendering' ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+                      <span className="text-xs text-gray-500">Processando...</span>
+                    </div>
+                  ) : (
+                    <Video className="w-12 h-12 text-gray-400" />
+                  )}
                 </div>
                 
                 {/* Status badge */}
@@ -116,7 +132,12 @@ const Projects = () => {
                 <div className="absolute top-3 right-3">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 bg-white/80 hover:bg-white">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="h-8 w-8 p-0 bg-white/80 hover:bg-white"
+                        disabled={project.status === 'rendering'}
+                      >
                         <MoreVertical className="w-4 h-4" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -142,6 +163,26 @@ const Projects = () => {
               </CardHeader>
 
               <CardContent className="pt-0">
+                {/* Rendering Progress */}
+                {project.status === 'rendering' && (
+                  <div className="mb-4 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-orange-800">
+                        {project.renderingStep}
+                      </span>
+                      <span className="text-xs text-orange-600">
+                        ~{project.estimatedTime} restante
+                      </span>
+                    </div>
+                    <Progress value={project.renderProgress} className="h-2" />
+                    <div className="flex justify-between items-center mt-1">
+                      <span className="text-xs text-orange-600">
+                        {project.renderProgress}% concluído
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />
@@ -164,8 +205,9 @@ const Projects = () => {
                     variant="outline" 
                     onClick={() => handleEditProject(project.id)}
                     className="text-xs"
+                    disabled={project.status === 'rendering'}
                   >
-                    Abrir
+                    {project.status === 'rendering' ? 'Processando...' : 'Abrir'}
                   </Button>
                 </div>
               </CardContent>
