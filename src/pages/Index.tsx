@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
 import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Video, Sparkles } from 'lucide-react';
 
 // Mock data for scenes
-const initialScenes = [
+const defaultScenes = [
   {
     id: 1,
     title: 'Introdução: O que é um canal de YouTube?',
@@ -74,11 +75,20 @@ const initialScenes = [
 ];
 
 const Index = () => {
-  const [scenes, setScenes] = useState(initialScenes);
+  const location = useLocation();
+  const [scenes, setScenes] = useState(defaultScenes);
   const [currentScene, setCurrentScene] = useState(0);
   const [editingScene, setEditingScene] = useState<any>(null);
   const [isSceneEditorOpen, setIsSceneEditorOpen] = useState(false);
   const [isGlobalOptionsOpen, setIsGlobalOptionsOpen] = useState(false);
+
+  // Carrega cenas do estado de navegação se disponível
+  useEffect(() => {
+    if (location.state?.scenes) {
+      setScenes(location.state.scenes);
+      setCurrentScene(0);
+    }
+  }, [location.state]);
 
   const handleSceneEdit = (scene: any) => {
     setEditingScene(scene);

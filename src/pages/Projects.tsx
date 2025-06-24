@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
+import NewProjectModal from '@/components/NewProjectModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,9 +46,18 @@ const mockProjects = [
 const Projects = () => {
   const navigate = useNavigate();
   const [projects] = useState(mockProjects);
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
 
   const handleCreateNew = () => {
-    navigate('/');
+    setIsNewProjectModalOpen(true);
+  };
+
+  const handleCreateProject = (projectData: { title: string; html: string; scenes: any[] }) => {
+    console.log('Criando projeto:', projectData);
+    // Aqui você salvaria o projeto com as cenas identificadas
+    // Por enquanto, vamos apenas redirecionar para o editor
+    setIsNewProjectModalOpen(false);
+    navigate('/', { state: { scenes: projectData.scenes, title: projectData.title } });
   };
 
   const handleEditProject = (projectId: number) => {
@@ -176,6 +186,13 @@ const Projects = () => {
           </div>
         )}
       </main>
+
+      {/* Modal de Novo Projeto */}
+      <NewProjectModal
+        isOpen={isNewProjectModalOpen}
+        onClose={() => setIsNewProjectModalOpen(false)}
+        onCreateProject={handleCreateProject}
+      />
     </div>
   );
 };
