@@ -136,6 +136,11 @@ const Index = () => {
 
         {/* Right Panel - Video Player and Controls with left margin for timeline */}
         <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar ml-80">
+          {/* Section Title */}
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-gray-900">Cenas</h1>
+          </div>
+
           <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
             {/* Video Player */}
             <VideoPlayer 
