@@ -1,9 +1,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Video, LogOut, FolderOpen, User, Palette } from 'lucide-react';
+import { Video, FolderOpen, Palette } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface HeaderProps {
@@ -70,25 +68,6 @@ const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
               <span className="hidden sm:inline">Opções Globais</span>
             </Button>
           )}
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="relative h-10 w-10 rounded-full">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src="/placeholder.svg" alt="User" />
-                  <AvatarFallback className="bg-video-gradient text-white">
-                    <User className="w-5 h-5" />
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-white border border-gray-200" align="end">
-              <DropdownMenuItem className="flex items-center space-x-2 cursor-pointer text-red-600">
-                <LogOut className="w-4 h-4" />
-                <span>Sair</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </header>
