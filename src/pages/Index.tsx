@@ -137,10 +137,10 @@ const Index = () => {
       
       {/* Main Content with Resizable Panels */}
       <main className="flex-1 min-h-0">
-        <ResizablePanelGroup direction="horizontal" className="min-h-screen">
+        <ResizablePanelGroup direction="horizontal" className="h-[calc(100vh-4rem)]">
           {/* Left Sidebar - Timeline/Scenes */}
           <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
-            <div className="min-h-screen p-4 bg-white border-r border-gray-200">
+            <div className="h-full p-4 bg-white border-r border-gray-200">
               <Timeline
                 scenes={scenes}
                 currentScene={currentScene}
@@ -156,7 +156,7 @@ const Index = () => {
 
           {/* Right Panel - Video Player and Controls */}
           <ResizablePanel defaultSize={75}>
-            <div className="min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar">
+            <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
               <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
                 {/* Video Player */}
                 <VideoPlayer
