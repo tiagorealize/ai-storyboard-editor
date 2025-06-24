@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Video, FolderOpen, Palette } from 'lucide-react';
@@ -33,16 +34,16 @@ const Header = ({
           </div>
         </div>
 
-        {/* Navigation Menu */}
-        <nav className="hidden md:flex items-center space-x-1">
-          {menuItems.map(item => <Button key={item.id} variant={activeTab === item.id ? "default" : "ghost"} className={`flex items-center space-x-2 ${activeTab === item.id ? 'bg-video-primary text-white' : 'text-gray-600 hover:text-gray-900'}`} onClick={() => handleNavigation(item.path)}>
-              <item.icon className="w-4 h-4" />
-              <span>{item.label}</span>
-            </Button>)}
-        </nav>
-
-        {/* User Menu */}
+        {/* Right side buttons */}
         <div className="flex items-center space-x-4">
+          {/* Navigation Menu - moved to right side */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {menuItems.map(item => <Button key={item.id} variant={activeTab === item.id ? "default" : "ghost"} className={`flex items-center space-x-2 ${activeTab === item.id ? 'bg-video-primary text-white' : 'text-gray-600 hover:text-gray-900'}`} onClick={() => handleNavigation(item.path)}>
+                <item.icon className="w-4 h-4" />
+                <span>{item.label}</span>
+              </Button>)}
+          </nav>
+
           {onOpenGlobalOptions && <Button variant="outline" size="sm" className="flex items-center space-x-2" onClick={onOpenGlobalOptions}>
               <Palette className="w-4 h-4" />
               <span className="hidden sm:inline">Opções Globais</span>
