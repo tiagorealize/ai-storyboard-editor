@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -65,8 +64,8 @@ export default {
 				},
 				// Custom colors for video editor
 				video: {
-					primary: '#6366f1',
-					secondary: '#8b5cf6',
+					primary: '#CE1C5A',
+					secondary: '#FD314D',
 					accent: '#06b6d4',
 					success: '#10b981',
 					warning: '#f59e0b',
@@ -115,10 +114,10 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 0 0 rgba(99, 102, 241, 0.4)'
+						boxShadow: '0 0 0 0 rgba(206, 28, 90, 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 0 10px rgba(99, 102, 241, 0)'
+						boxShadow: '0 0 0 10px rgba(206, 28, 90, 0)'
 					}
 				}
 			},
@@ -132,8 +131,8 @@ export default {
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-				'video-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-				'ai-gradient': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+				'video-gradient': 'linear-gradient(135deg, #CE1C5A 0%, #FD314D 100%)',
+				'ai-gradient': 'linear-gradient(135deg, #CE1C5A 0%, #FD314D 100%)'
 			}
 		}
 	},

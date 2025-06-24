@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -178,7 +177,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+  background: linear-gradient(45deg, #CE1C5A, #FD314D, #CE1C5A);
   border-radius: inherit;
   z-index: -1;
   animation: gradient-shift 3s ease infinite;
