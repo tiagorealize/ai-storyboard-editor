@@ -3,9 +3,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Video, Settings, LogOut, FolderOpen, Compass, User } from 'lucide-react';
+import { Video, Settings, LogOut, FolderOpen, Compass, User, Palette } from 'lucide-react';
 
-const Header = () => {
+interface HeaderProps {
+  onOpenGlobalOptions?: () => void;
+}
+
+const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
   const [activeTab, setActiveTab] = useState('editor');
 
   const menuItems = [
@@ -49,6 +53,18 @@ const Header = () => {
 
         {/* User Menu */}
         <div className="flex items-center space-x-4">
+          {onOpenGlobalOptions && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center space-x-2"
+              onClick={onOpenGlobalOptions}
+            >
+              <Palette className="w-4 h-4" />
+              <span className="hidden sm:inline">Opções Globais</span>
+            </Button>
+          )}
+
           <Button variant="outline" size="sm" className="hidden sm:flex">
             <Settings className="w-4 h-4 mr-2" />
             Configurações

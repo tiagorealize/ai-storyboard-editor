@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import Header from '@/components/Header';
 import TopicGenerator from '@/components/TopicGenerator';
 import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
 import SceneEditor from '@/components/SceneEditor';
-import EditorSidebar from '@/components/EditorSidebar';
+import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
 
 // Mock data for scenes
 const initialScenes = [
@@ -77,6 +76,7 @@ const Index = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const [editingScene, setEditingScene] = useState<any>(null);
   const [isSceneEditorOpen, setIsSceneEditorOpen] = useState(false);
+  const [isGlobalOptionsOpen, setIsGlobalOptionsOpen] = useState(false);
 
   const handleGenerateVideo = (topic: string) => {
     console.log('Generating video for topic:', topic);
@@ -130,32 +130,33 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
+      <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} />
       
-      <div className="flex-1 flex">
-        {/* Main Content */}
-        <div className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar">
-          {/* Video Player */}
-          <VideoPlayer
-            currentScene={currentScene}
-            totalScenes={scenes.length}
-            onSceneChange={setCurrentScene}
-          />
+      {/* Main Content - Full Width */}
+      <main className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar">
+        {/* Video Player */}
+        <VideoPlayer
+          currentScene={currentScene}
+          totalScenes={scenes.length}
+          onSceneChange={setCurrentScene}
+        />
 
-          {/* Timeline */}
-          <Timeline
-            scenes={scenes}
-            currentScene={currentScene}
-            onSceneSelect={setCurrentScene}
-            onSceneEdit={handleSceneEdit}
-            onSceneDelete={handleSceneDelete}
-            onAddScene={handleAddScene}
-          />
-        </div>
+        {/* Timeline */}
+        <Timeline
+          scenes={scenes}
+          currentScene={currentScene}
+          onSceneSelect={setCurrentScene}
+          onSceneEdit={handleSceneEdit}
+          onSceneDelete={handleSceneDelete}
+          onAddScene={handleAddScene}
+        />
+      </main>
 
-        {/* Sidebar */}
-        <EditorSidebar />
-      </div>
+      {/* Global Options Drawer */}
+      <GlobalOptionsDrawer 
+        isOpen={isGlobalOptionsOpen}
+        onClose={() => setIsGlobalOptionsOpen(false)}
+      />
 
       {/* Scene Editor Modal */}
       <SceneEditor
