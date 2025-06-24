@@ -1,4 +1,5 @@
 
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Video, FolderOpen, Palette } from 'lucide-react';
@@ -29,7 +30,7 @@ const Header = ({
             <Video className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">AI VideoStudio</h1>
+            <h1 className="text-xl font-bold text-gray-900">Gerador de vídeo</h1>
             
           </div>
         </div>
@@ -53,3 +54,4 @@ const Header = ({
     </header>;
 };
 export default Header;
+
