@@ -1,4 +1,5 @@
 
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -67,10 +68,10 @@ const Timeline = ({
           {scenes.map((scene, index) => (
             <Card 
               key={scene.id} 
-              className={`timeline-scene cursor-pointer transition-all duration-200 group ${
+              className={`timeline-scene cursor-pointer transition-all duration-200 group hover:shadow-md ${
                 currentScene === index 
                   ? 'ring-2 ring-video-primary shadow-lg bg-video-primary/5' 
-                  : 'hover:shadow-md hover:border-video-primary/30'
+                  : ''
               } ${draggedScene === index ? 'dragging' : ''} ${scene.isRendering ? 'opacity-75' : ''}`} 
               onClick={() => onSceneSelect(index)} 
               draggable 
@@ -82,10 +83,10 @@ const Timeline = ({
                 {/* Scene Header */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-1">
-                    <Badge variant="outline" className={`text-xs transition-colors duration-200 ${
+                    <Badge variant="outline" className={`text-xs ${
                       currentScene === index 
                         ? 'border-video-primary text-video-primary bg-video-primary/10' 
-                        : 'group-hover:border-video-primary/50'
+                        : ''
                     }`}>
                       {index + 1}
                     </Badge>
@@ -123,8 +124,8 @@ const Timeline = ({
 
                 {/* Thumbnail */}
                 <div className="relative bg-gray-100 rounded-lg aspect-video mb-2 overflow-hidden">
-                  <div className={`w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex flex-col items-center justify-center transition-all duration-200 ${
-                    currentScene === index ? 'bg-gradient-to-br from-video-primary/10 to-video-primary/20' : 'group-hover:from-gray-100 group-hover:to-gray-200'
+                  <div className={`w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex flex-col items-center justify-center ${
+                    currentScene === index ? 'bg-gradient-to-br from-video-primary/10 to-video-primary/20' : ''
                   }`}>
                     {scene.isRendering ? (
                       <>
@@ -135,8 +136,8 @@ const Timeline = ({
                         </Badge>
                       </>
                     ) : (
-                      <Image className={`w-6 h-6 transition-colors duration-200 ${
-                        currentScene === index ? 'text-video-primary' : 'text-gray-400 group-hover:text-gray-500'
+                      <Image className={`w-6 h-6 ${
+                        currentScene === index ? 'text-video-primary' : 'text-gray-400'
                       }`} />
                     )}
                   </div>
@@ -150,13 +151,13 @@ const Timeline = ({
                 </div>
 
                 {/* Scene Info */}
-                <h4 className={`font-medium text-sm mb-1 line-clamp-2 transition-colors duration-200 ${
+                <h4 className={`font-medium text-sm mb-1 line-clamp-2 ${
                   currentScene === index ? 'text-video-primary' : 'text-gray-900'
                 }`}>
                   {scene.title}
                 </h4>
                 
-                <p className={`text-xs line-clamp-2 transition-colors duration-200 ${
+                <p className={`text-xs line-clamp-2 ${
                   currentScene === index ? 'text-video-primary/80' : 'text-gray-600'
                 }`}>
                   {scene.text}
@@ -181,3 +182,4 @@ const Timeline = ({
 };
 
 export default Timeline;
+
