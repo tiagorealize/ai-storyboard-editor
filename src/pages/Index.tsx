@@ -117,59 +117,35 @@ const Index = () => {
     // TODO: Implement video generation logic
   };
   return <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header 
-        onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} 
-        onGenerateVideo={handleGenerateVideo}
-      />
+      <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} onGenerateVideo={handleGenerateVideo} />
       
       {/* Main Content with Fixed Sidebar */}
       <main className="flex-1 min-h-0 flex">
         {/* Fixed Left Sidebar - Timeline/Scenes */}
-        <Timeline 
-          scenes={scenes} 
-          currentScene={currentScene} 
-          onSceneSelect={setCurrentScene} 
-          onSceneEdit={handleSceneEdit} 
-          onSceneDelete={handleSceneDelete} 
-          onAddScene={handleAddScene} 
-        />
+        <Timeline scenes={scenes} currentScene={currentScene} onSceneSelect={setCurrentScene} onSceneEdit={handleSceneEdit} onSceneDelete={handleSceneDelete} onAddScene={handleAddScene} />
 
         {/* Right Panel - Video Player and Controls with left margin for timeline */}
         <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar ml-80">
           {/* Section Title */}
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Cenas</h1>
+            
           </div>
 
           <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
             {/* Video Player */}
-            <VideoPlayer 
-              currentScene={currentScene} 
-              totalScenes={scenes.length} 
-              onSceneChange={setCurrentScene} 
-              className="px-0" 
-            />
+            <VideoPlayer currentScene={currentScene} totalScenes={scenes.length} onSceneChange={setCurrentScene} className="px-0" />
             
             {/* Inline Scene Editor */}
-            {isInlineEditorOpen && (
-              <InlineSceneEditor
-                scene={editingScene}
-                onSave={handleSceneSave}
-                onClose={() => {
-                  setIsInlineEditorOpen(false);
-                  setEditingScene(null);
-                }}
-              />
-            )}
+            {isInlineEditorOpen && <InlineSceneEditor scene={editingScene} onSave={handleSceneSave} onClose={() => {
+            setIsInlineEditorOpen(false);
+            setEditingScene(null);
+          }} />}
           </div>
         </div>
       </main>
 
       {/* Global Options Drawer */}
-      <GlobalOptionsDrawer 
-        isOpen={isGlobalOptionsOpen} 
-        onClose={() => setIsGlobalOptionsOpen(false)} 
-      />
+      <GlobalOptionsDrawer isOpen={isGlobalOptionsOpen} onClose={() => setIsGlobalOptionsOpen(false)} />
     </div>;
 };
 export default Index;
