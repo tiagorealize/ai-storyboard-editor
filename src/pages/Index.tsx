@@ -125,21 +125,17 @@ const Index = () => {
       {/* Main Content with Fixed Sidebar */}
       <main className="flex-1 min-h-0 flex">
         {/* Fixed Left Sidebar - Timeline/Scenes */}
-        <div className="w-80 min-h-screen bg-white border-r border-gray-200 flex-shrink-0">
-          <div className="p-4 h-full">
-            <Timeline 
-              scenes={scenes} 
-              currentScene={currentScene} 
-              onSceneSelect={setCurrentScene} 
-              onSceneEdit={handleSceneEdit} 
-              onSceneDelete={handleSceneDelete} 
-              onAddScene={handleAddScene} 
-            />
-          </div>
-        </div>
+        <Timeline 
+          scenes={scenes} 
+          currentScene={currentScene} 
+          onSceneSelect={setCurrentScene} 
+          onSceneEdit={handleSceneEdit} 
+          onSceneDelete={handleSceneDelete} 
+          onAddScene={handleAddScene} 
+        />
 
-        {/* Right Panel - Video Player and Controls */}
-        <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar">
+        {/* Right Panel - Video Player and Controls with left margin for timeline */}
+        <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar ml-80">
           <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
             {/* Video Player */}
             <VideoPlayer 

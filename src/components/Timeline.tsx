@@ -58,8 +58,8 @@ const Timeline = ({
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      <div className="flex items-center justify-between mb-4 px-2 flex-shrink-0">
+    <div className="h-screen flex flex-col fixed top-0 left-0 w-80 z-10">
+      <div className="flex items-center justify-between mb-4 px-2 pt-4 flex-shrink-0">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
           <Clock className="w-4 h-4 mr-2 text-video-primary" />
           Cenas
@@ -67,8 +67,8 @@ const Timeline = ({
       </div>
 
       {/* Scrollable Timeline */}
-      <ScrollArea className="flex-1 pr-2">
-        <div className="space-y-3 pb-4 px-[12px]">
+      <ScrollArea className="flex-1 pr-2 pb-4">
+        <div className="space-y-3 px-[12px]">
           {scenes.map((scene, index) => (
             <Card
               key={scene.id}
