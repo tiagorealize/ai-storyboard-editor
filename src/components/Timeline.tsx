@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Edit3, Trash2, Plus, Clock, Image, Volume2, Type, Sparkles } from 'lucide-react';
+import { Edit3, Trash2, Plus, Clock, Image, Volume2, Type, Sparkles, Eye, Loader2 } from 'lucide-react';
 
 interface Scene {
   id: number;
@@ -13,6 +13,7 @@ interface Scene {
   text: string;
   hasAudio: boolean;
   hasImage: boolean;
+  isRendering?: boolean;
 }
 
 interface TimelineProps {
@@ -46,6 +47,11 @@ const Timeline = ({
     e.preventDefault();
   };
 
+  const handlePreviewScene = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    onSceneSelect(index);
+  };
+
   const formatDuration = (seconds: number) => {
     return `${seconds}s`;
   };
@@ -75,7 +81,9 @@ const Timeline = ({
                   currentScene === index
                     ? 'ring-2 ring-video-primary shadow-lg'
                     : 'hover:shadow-md border-gray-200'
-                } ${draggedScene === index ? 'dragging' : ''}`}
+                } ${draggedScene === index ? 'dragging' : ''} ${
+                  scene.isRendering ? 'opacity-75' : ''
+                }`}
                 onClick={() => onSceneSelect(index)}
                 draggable
                 onDragStart={() => handleDragStart(index)}
@@ -92,8 +100,23 @@ const Timeline = ({
                       <Badge variant="secondary" className="text-xs">
                         {formatDuration(scene.duration)}
                       </Badge>
+                      {scene.isRendering && (
+                        <Badge variant="outline" className="text-xs text-orange-600 border-orange-200">
+                          <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                          Renderizando
+                        </Badge>
+                      )}
                     </div>
                     <div className="flex space-x-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => handlePreviewScene(index, e)}
+                        className="h-6 w-6 p-0"
+                        title="Visualizar cena"
+                      >
+                        <Eye className="w-3 h-3" />
+                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -102,6 +125,7 @@ const Timeline = ({
                           onSceneEdit(scene);
                         }}
                         className="h-6 w-6 p-0"
+                        disabled={scene.isRendering}
                       >
                         <Edit3 className="w-3 h-3" />
                       </Button>
@@ -113,6 +137,7 @@ const Timeline = ({
                           onSceneDelete(scene.id);
                         }}
                         className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                        disabled={scene.isRendering}
                       >
                         <Trash2 className="w-3 h-3" />
                       </Button>
@@ -122,12 +147,23 @@ const Timeline = ({
                   {/* Thumbnail */}
                   <div className="relative bg-gray-100 rounded-lg aspect-video mb-3 overflow-hidden">
                     <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                      <Image className="w-8 h-8 text-gray-400" />
+                      {scene.isRendering ? (
+                        <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+                      ) : (
+                        <Image className="w-8 h-8 text-gray-400" />
+                      )}
                     </div>
-                    {currentScene === index && (
+                    {currentScene === index && !scene.isRendering && (
                       <div className="absolute inset-0 bg-video-primary/10 flex items-center justify-center">
                         <div className="w-8 h-8 bg-video-primary rounded-full flex items-center justify-center">
                           <Sparkles className="w-4 h-4 text-white" />
+                        </div>
+                      </div>
+                    )}
+                    {scene.isRendering && (
+                      <div className="absolute inset-0 bg-orange-500/10 flex items-center justify-center">
+                        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                          <Loader2 className="w-4 h-4 text-white animate-spin" />
                         </div>
                       </div>
                     )}

@@ -31,7 +31,8 @@ const initialScenes = [
     hasImage: true,
     narrationText: 'A primeira regra de ouro é: seja específico! Canais que falam sobre tudo não falam sobre nada.',
     voiceType: 'female-energetic',
-    backgroundMusic: 'corporate'
+    backgroundMusic: 'corporate',
+    isRendering: true
   },
   {
     id: 3,
@@ -55,7 +56,8 @@ const initialScenes = [
     hasImage: true,
     narrationText: 'O SEO no YouTube é fundamental. Pesquisem palavras-chave antes de criar seus vídeos!',
     voiceType: 'female-energetic',
-    backgroundMusic: 'corporate'
+    backgroundMusic: 'corporate',
+    isRendering: true
   },
   {
     id: 5,
