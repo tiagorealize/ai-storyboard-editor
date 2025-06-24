@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -8,9 +7,10 @@ interface VideoPlayerProps {
   currentScene: number;
   totalScenes: number;
   onSceneChange: (scene: number) => void;
+  className?: string;
 }
 
-const VideoPlayer = ({ currentScene, totalScenes, onSceneChange }: VideoPlayerProps) => {
+const VideoPlayer = ({ currentScene, totalScenes, onSceneChange, className }: VideoPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(50);
@@ -47,7 +47,7 @@ const VideoPlayer = ({ currentScene, totalScenes, onSceneChange }: VideoPlayerPr
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className={`bg-white rounded-xl shadow-lg overflow-hidden ${className || ''}`}>
       {/* Video Display Area */}
       <div className="relative bg-black aspect-video flex items-center justify-center group">
         {/* Mock Video Content */}
