@@ -53,7 +53,7 @@ const Timeline = ({
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <div className="flex items-center justify-between mb-4 px-2 flex-shrink-0">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
           <Clock className="w-4 h-4 mr-2 text-video-primary" />
@@ -63,7 +63,7 @@ const Timeline = ({
 
       {/* Scrollable Timeline */}
       <ScrollArea className="flex-1 pr-2">
-        <div className="space-y-3">
+        <div className="space-y-3 pb-4">
           {scenes.map((scene, index) => (
             <Card
               key={scene.id}
