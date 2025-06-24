@@ -1,10 +1,11 @@
-
 import { useState } from 'react';
 import Header from '@/components/Header';
 import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
 import SceneEditor from '@/components/SceneEditor';
 import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
+import { Button } from '@/components/ui/button';
+import { Video, Sparkles } from 'lucide-react';
 
 // Mock data for scenes
 const initialScenes = [
@@ -111,28 +112,48 @@ const Index = () => {
     setScenes([...scenes, newScene]);
   };
 
+  const handleGenerateVideo = () => {
+    console.log('Generating final video...');
+    // TODO: Implement video generation logic
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} />
       
-      {/* Main Content - Full Width */}
-      <main className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar">
-        {/* Video Player */}
-        <VideoPlayer
-          currentScene={currentScene}
-          totalScenes={scenes.length}
-          onSceneChange={setCurrentScene}
-        />
+      {/* Main Content - Fixed Width */}
+      <main className="flex-1 flex justify-center p-6 overflow-y-auto custom-scrollbar">
+        <div className="w-full max-w-[1000px] space-y-6">
+          {/* Video Player */}
+          <VideoPlayer
+            currentScene={currentScene}
+            totalScenes={scenes.length}
+            onSceneChange={setCurrentScene}
+          />
 
-        {/* Timeline */}
-        <Timeline
-          scenes={scenes}
-          currentScene={currentScene}
-          onSceneSelect={setCurrentScene}
-          onSceneEdit={handleSceneEdit}
-          onSceneDelete={handleSceneDelete}
-          onAddScene={handleAddScene}
-        />
+          {/* Timeline */}
+          <Timeline
+            scenes={scenes}
+            currentScene={currentScene}
+            onSceneSelect={setCurrentScene}
+            onSceneEdit={handleSceneEdit}
+            onSceneDelete={handleSceneDelete}
+            onAddScene={handleAddScene}
+          />
+
+          {/* Generate Video Button */}
+          <div className="flex justify-center pt-8 pb-6">
+            <Button
+              onClick={handleGenerateVideo}
+              size="lg"
+              className="bg-video-gradient hover:opacity-90 text-white px-12 py-4 h-auto text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              <Sparkles className="w-6 h-6 mr-3" />
+              Gerar Vídeo Final
+              <Video className="w-6 h-6 ml-3" />
+            </Button>
+          </div>
+        </div>
       </main>
 
       {/* Global Options Drawer */}
