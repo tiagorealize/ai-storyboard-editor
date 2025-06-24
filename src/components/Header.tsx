@@ -14,11 +14,10 @@ const Header = ({ onOpenGlobalOptions }: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const activeTab = location.pathname === '/' ? 'editor' : 'projects';
+  const activeTab = location.pathname === '/projects' ? 'projects' : 'editor';
 
   const menuItems = [
     { id: 'projects', label: 'Meus Projetos', icon: FolderOpen, path: '/projects' },
-    { id: 'editor', label: 'Editor', icon: Video, path: '/' },
   ];
 
   const handleNavigation = (path: string) => {
