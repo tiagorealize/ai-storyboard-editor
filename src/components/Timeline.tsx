@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Edit3, Trash2, Plus, Clock, Image, Sparkles, Eye, Loader2 } from 'lucide-react';
+import { Edit3, Trash2, Plus, Clock, Image, Sparkles, Loader2 } from 'lucide-react';
 
 interface Scene {
   id: number;
@@ -44,11 +44,6 @@ const Timeline = ({
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-  };
-
-  const handlePreviewScene = (index: number, e: React.MouseEvent) => {
-    e.stopPropagation();
-    onSceneSelect(index);
   };
 
   const formatDuration = (seconds: number) => {
@@ -101,15 +96,6 @@ const Timeline = ({
                       </Badge>
                     </div>
                     <div className="flex space-x-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => handlePreviewScene(index, e)}
-                        className="h-6 w-6 p-0"
-                        title="Visualizar cena"
-                      >
-                        <Eye className="w-3 h-3" />
-                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"
