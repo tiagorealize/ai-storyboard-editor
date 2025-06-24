@@ -100,12 +100,6 @@ const Timeline = ({
                       <Badge variant="secondary" className="text-xs">
                         {formatDuration(scene.duration)}
                       </Badge>
-                      {scene.isRendering && (
-                        <Badge variant="outline" className="text-xs text-orange-600 border-orange-200">
-                          <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                          Renderizando
-                        </Badge>
-                      )}
                     </div>
                     <div className="flex space-x-1">
                       <Button
@@ -146,9 +140,15 @@ const Timeline = ({
 
                   {/* Thumbnail */}
                   <div className="relative bg-gray-100 rounded-lg aspect-video mb-3 overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex flex-col items-center justify-center">
                       {scene.isRendering ? (
-                        <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+                        <>
+                          <Loader2 className="w-8 h-8 text-gray-400 animate-spin mb-2" />
+                          <Badge variant="outline" className="text-xs text-orange-600 border-orange-200">
+                            <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                            Renderizando
+                          </Badge>
+                        </>
                       ) : (
                         <Image className="w-8 h-8 text-gray-400" />
                       )}
@@ -157,13 +157,6 @@ const Timeline = ({
                       <div className="absolute inset-0 bg-video-primary/10 flex items-center justify-center">
                         <div className="w-8 h-8 bg-video-primary rounded-full flex items-center justify-center">
                           <Sparkles className="w-4 h-4 text-white" />
-                        </div>
-                      </div>
-                    )}
-                    {scene.isRendering && (
-                      <div className="absolute inset-0 bg-orange-500/10 flex items-center justify-center">
-                        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                          <Loader2 className="w-4 h-4 text-white animate-spin" />
                         </div>
                       </div>
                     )}
