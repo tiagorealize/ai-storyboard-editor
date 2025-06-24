@@ -139,7 +139,7 @@ const Index = () => {
         <ResizablePanelGroup direction="horizontal" className="h-full">
           {/* Left Sidebar - Timeline/Scenes */}
           <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
-            <div className="h-full p-4 overflow-y-auto custom-scrollbar bg-white border-r border-gray-200">
+            <div className="h-full p-4 bg-white border-r border-gray-200">
               <Timeline
                 scenes={scenes}
                 currentScene={currentScene}
