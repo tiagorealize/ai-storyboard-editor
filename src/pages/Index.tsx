@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -133,7 +132,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} />
+      <Header 
+        onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)}
+        onGenerateVideo={handleGenerateVideo}
+      />
       
       {/* Main Content with Resizable Panels */}
       <main className="flex-1 min-h-0">
@@ -154,7 +156,7 @@ const Index = () => {
 
           <ResizableHandle withHandle />
 
-          {/* Right Panel - Video Player and Controls */}
+          {/* Right Panel - Video Player */}
           <ResizablePanel defaultSize={75}>
             <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
               <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
@@ -164,19 +166,6 @@ const Index = () => {
                   totalScenes={scenes.length}
                   onSceneChange={setCurrentScene}
                 />
-
-                {/* Generate Video Button */}
-                <div className="flex justify-center pt-8">
-                  <Button
-                    onClick={handleGenerateVideo}
-                    size="lg"
-                    className="bg-video-gradient hover:opacity-90 text-white px-12 py-4 h-auto text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    <Sparkles className="w-6 h-6 mr-3" />
-                    Gerar Vídeo Final
-                    <Video className="w-6 h-6 ml-3" />
-                  </Button>
-                </div>
               </div>
             </div>
           </ResizablePanel>
