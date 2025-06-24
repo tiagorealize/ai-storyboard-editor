@@ -1,6 +1,6 @@
+
 import { useState } from 'react';
 import Header from '@/components/Header';
-import TopicGenerator from '@/components/TopicGenerator';
 import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
 import SceneEditor from '@/components/SceneEditor';
@@ -71,17 +71,11 @@ const initialScenes = [
 ];
 
 const Index = () => {
-  const [showEditor, setShowEditor] = useState(false);
   const [scenes, setScenes] = useState(initialScenes);
   const [currentScene, setCurrentScene] = useState(0);
   const [editingScene, setEditingScene] = useState<any>(null);
   const [isSceneEditorOpen, setIsSceneEditorOpen] = useState(false);
   const [isGlobalOptionsOpen, setIsGlobalOptionsOpen] = useState(false);
-
-  const handleGenerateVideo = (topic: string) => {
-    console.log('Generating video for topic:', topic);
-    setShowEditor(true);
-  };
 
   const handleSceneEdit = (scene: any) => {
     setEditingScene(scene);
@@ -116,17 +110,6 @@ const Index = () => {
     };
     setScenes([...scenes, newScene]);
   };
-
-  if (!showEditor) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <main className="max-w-7xl mx-auto px-6 py-8">
-          <TopicGenerator onGenerateVideo={handleGenerateVideo} />
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
