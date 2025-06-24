@@ -60,18 +60,6 @@ const Header = ({
             ))}
           </nav>
 
-          {/* Generate Video Button */}
-          {onGenerateVideo && (
-            <Button
-              onClick={onGenerateVideo}
-              className="bg-video-gradient hover:opacity-90 text-white px-6 py-2 font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Gerar Vídeo
-              <Video className="w-4 h-4 ml-2" />
-            </Button>
-          )}
-
           {/* Global Options Button */}
           {onOpenGlobalOptions && (
             <Button
@@ -82,6 +70,17 @@ const Header = ({
             >
               <Palette className="w-4 h-4" />
               <span className="hidden sm:inline">Opções Globais</span>
+            </Button>
+          )}
+
+          {/* Generate Video Button */}
+          {onGenerateVideo && (
+            <Button
+              onClick={onGenerateVideo}
+              className="bg-video-gradient hover:opacity-90 text-white px-6 py-2 font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              Gerar Vídeo
             </Button>
           )}
         </div>
