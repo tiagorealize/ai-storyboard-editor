@@ -8,7 +8,6 @@ import InlineSceneEditor from '@/components/InlineSceneEditor';
 import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
 import { Button } from '@/components/ui/button';
 import { Video, Sparkles } from 'lucide-react';
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 
 // Mock data for scenes
 const defaultScenes = [{
@@ -123,52 +122,46 @@ const Index = () => {
         onGenerateVideo={handleGenerateVideo}
       />
       
-      {/* Main Content with Resizable Panels */}
-      <main className="flex-1 min-h-0">
-        <ResizablePanelGroup direction="horizontal" className="min-h-screen">
-          {/* Left Sidebar - Timeline/Scenes */}
-          <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
-            <div className="min-h-screen p-4 bg-white border-r border-gray-200">
-              <Timeline 
-                scenes={scenes} 
-                currentScene={currentScene} 
-                onSceneSelect={setCurrentScene} 
-                onSceneEdit={handleSceneEdit} 
-                onSceneDelete={handleSceneDelete} 
-                onAddScene={handleAddScene} 
+      {/* Main Content with Fixed Sidebar */}
+      <main className="flex-1 min-h-0 flex">
+        {/* Fixed Left Sidebar - Timeline/Scenes */}
+        <div className="w-80 min-h-screen bg-white border-r border-gray-200 flex-shrink-0">
+          <div className="p-4 h-full">
+            <Timeline 
+              scenes={scenes} 
+              currentScene={currentScene} 
+              onSceneSelect={setCurrentScene} 
+              onSceneEdit={handleSceneEdit} 
+              onSceneDelete={handleSceneDelete} 
+              onAddScene={handleAddScene} 
+            />
+          </div>
+        </div>
+
+        {/* Right Panel - Video Player and Controls */}
+        <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar">
+          <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
+            {/* Video Player */}
+            <VideoPlayer 
+              currentScene={currentScene} 
+              totalScenes={scenes.length} 
+              onSceneChange={setCurrentScene} 
+              className="px-0" 
+            />
+            
+            {/* Inline Scene Editor */}
+            {isInlineEditorOpen && (
+              <InlineSceneEditor
+                scene={editingScene}
+                onSave={handleSceneSave}
+                onClose={() => {
+                  setIsInlineEditorOpen(false);
+                  setEditingScene(null);
+                }}
               />
-            </div>
-          </ResizablePanel>
-
-          <ResizableHandle withHandle />
-
-          {/* Right Panel - Video Player and Controls */}
-          <ResizablePanel defaultSize={75}>
-            <div className="min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar">
-              <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
-                {/* Video Player */}
-                <VideoPlayer 
-                  currentScene={currentScene} 
-                  totalScenes={scenes.length} 
-                  onSceneChange={setCurrentScene} 
-                  className="px-0" 
-                />
-                
-                {/* Inline Scene Editor */}
-                {isInlineEditorOpen && (
-                  <InlineSceneEditor
-                    scene={editingScene}
-                    onSave={handleSceneSave}
-                    onClose={() => {
-                      setIsInlineEditorOpen(false);
-                      setEditingScene(null);
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
+            )}
+          </div>
+        </div>
       </main>
 
       {/* Global Options Drawer */}
