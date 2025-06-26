@@ -5,7 +5,6 @@ import VideoPlayer from '@/components/VideoPlayer';
 import Timeline from '@/components/Timeline';
 import SceneEditor from '@/components/SceneEditor';
 import InlineSceneEditor from '@/components/InlineSceneEditor';
-import GlobalOptionsDrawer from '@/components/GlobalOptionsDrawer';
 import { Button } from '@/components/ui/button';
 import { Video, Sparkles } from 'lucide-react';
 
@@ -68,6 +67,7 @@ const defaultScenes = [{
   voiceType: 'female-energetic',
   backgroundMusic: 'upbeat'
 }];
+
 const Index = () => {
   const location = useLocation();
   const [scenes, setScenes] = useState(defaultScenes);
@@ -75,7 +75,6 @@ const Index = () => {
   const [editingScene, setEditingScene] = useState<any>(null);
   const [isSceneEditorOpen, setIsSceneEditorOpen] = useState(false);
   const [isInlineEditorOpen, setIsInlineEditorOpen] = useState(false);
-  const [isGlobalOptionsOpen, setIsGlobalOptionsOpen] = useState(false);
 
   // Carrega cenas do estado de navegação se disponível
   useEffect(() => {
@@ -84,19 +83,23 @@ const Index = () => {
       setCurrentScene(0);
     }
   }, [location.state]);
+
   const handleSceneEdit = (scene: any) => {
     setEditingScene(scene);
     setIsInlineEditorOpen(true);
   };
+
   const handleSceneSave = (updatedScene: any) => {
     setScenes(scenes.map(scene => scene.id === updatedScene.id ? updatedScene : scene));
   };
+
   const handleSceneDelete = (sceneId: number) => {
     setScenes(scenes.filter(scene => scene.id !== sceneId));
     if (currentScene >= scenes.length - 1) {
       setCurrentScene(Math.max(0, scenes.length - 2));
     }
   };
+
   const handleAddScene = () => {
     const newScene = {
       id: Math.max(...scenes.map(s => s.id)) + 1,
@@ -112,17 +115,27 @@ const Index = () => {
     };
     setScenes([...scenes, newScene]);
   };
+
   const handleGenerateVideo = () => {
     console.log('Generating final video...');
     // TODO: Implement video generation logic
   };
-  return <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header onOpenGlobalOptions={() => setIsGlobalOptionsOpen(true)} onGenerateVideo={handleGenerateVideo} />
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header onGenerateVideo={handleGenerateVideo} />
       
       {/* Main Content with Fixed Sidebar */}
       <main className="flex-1 min-h-0 flex">
         {/* Fixed Left Sidebar - Timeline/Scenes */}
-        <Timeline scenes={scenes} currentScene={currentScene} onSceneSelect={setCurrentScene} onSceneEdit={handleSceneEdit} onSceneDelete={handleSceneDelete} onAddScene={handleAddScene} />
+        <Timeline 
+          scenes={scenes} 
+          currentScene={currentScene} 
+          onSceneSelect={setCurrentScene} 
+          onSceneEdit={handleSceneEdit} 
+          onSceneDelete={handleSceneDelete} 
+          onAddScene={handleAddScene} 
+        />
 
         {/* Right Panel - Video Player and Controls with left margin for timeline */}
         <div className="flex-1 min-h-screen flex flex-col p-6 overflow-y-auto custom-scrollbar ml-80">
@@ -133,19 +146,29 @@ const Index = () => {
 
           <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
             {/* Video Player */}
-            <VideoPlayer currentScene={currentScene} totalScenes={scenes.length} onSceneChange={setCurrentScene} className="px-0" />
+            <VideoPlayer 
+              currentScene={currentScene} 
+              totalScenes={scenes.length} 
+              onSceneChange={setCurrentScene} 
+              className="px-0" 
+            />
             
             {/* Inline Scene Editor */}
-            {isInlineEditorOpen && <InlineSceneEditor scene={editingScene} onSave={handleSceneSave} onClose={() => {
-            setIsInlineEditorOpen(false);
-            setEditingScene(null);
-          }} />}
+            {isInlineEditorOpen && (
+              <InlineSceneEditor 
+                scene={editingScene} 
+                onSave={handleSceneSave} 
+                onClose={() => {
+                  setIsInlineEditorOpen(false);
+                  setEditingScene(null);
+                }} 
+              />
+            )}
           </div>
         </div>
       </main>
-
-      {/* Global Options Drawer */}
-      <GlobalOptionsDrawer isOpen={isGlobalOptionsOpen} onClose={() => setIsGlobalOptionsOpen(false)} />
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
