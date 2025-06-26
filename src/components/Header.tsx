@@ -41,24 +41,26 @@ const Header = ({
 
         {/* Right side buttons */}
         <div className="flex items-center space-x-4">
-          {/* Navigation Menu */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {menuItems.map(item => (
-              <Button
-                key={item.id}
-                variant={activeTab === item.id ? "default" : "ghost"}
-                className={`flex items-center space-x-2 ${
-                  activeTab === item.id 
-                    ? 'bg-video-primary text-white' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                onClick={() => handleNavigation(item.path)}
-              >
-                <item.icon className="w-4 h-4" />
-                <span>{item.label}</span>
-              </Button>
-            ))}
-          </nav>
+          {/* Navigation Menu - Hide on projects page */}
+          {location.pathname !== '/projects' && (
+            <nav className="hidden md:flex items-center space-x-1">
+              {menuItems.map(item => (
+                <Button
+                  key={item.id}
+                  variant={activeTab === item.id ? "default" : "ghost"}
+                  className={`flex items-center space-x-2 ${
+                    activeTab === item.id 
+                      ? 'bg-video-primary text-white' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                  onClick={() => handleNavigation(item.path)}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.label}</span>
+                </Button>
+              ))}
+            </nav>
+          )}
 
           {/* Generate Video Button */}
           {onGenerateVideo && (
